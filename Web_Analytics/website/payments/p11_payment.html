@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/main.css?ver=2">
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Della+Respira&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Unicase:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Detect.js/2.2.2/detect.min.js"></script>
+    <script src="../js/timeme.min.js"></script>
+    <script src="../js/custom_timeme.js"></script>
+    <script src="http://127.0.0.1:8000/Web_Analytics/User_Details"></script>
+    <title>payment_11</title>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info">
+        <div class="container-fluid">
+            <a class="collapse navbar-collapse nav-link text-white" href="../main.html">
+                <i class="fas fa-shopping-bag fa-2x"></i>&nbsp;&nbsp;
+                <h2>the stitches</h2>
+            </a>
+            <span class="navbar">
+                <a class="nav-link text-white" href="../about.html"><h5>About Us</h5></a>
+                <a class="nav-link text-white" href="../contact.html"><h5>Contact</h5></a>
+            </span>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row pt-5">
+            <div class="col">
+                <div class="input-group">
+                    <span class="input-group-text">First and last name</span>
+                    <input type="text" aria-label="First name" class="form-control">
+                    <input type="text" aria-label="Last name" class="form-control">
+                </div>
+                <div class="input-group mb-3 pt-4">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Address</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group pt-2">
+                    <span class="input-group-text">City and State</span>
+                    <input type="text" aria-label="First name" class="form-control">
+                    <input type="text" aria-label="Last name" class="form-control">
+                </div>
+                <div class="input-group mb-3 pt-4">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Country</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3 pt-2">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Pincode</span>
+                    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+            </div>
+            <div class="col">
+                <div class="pt-5 pl-5 rate" style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; color: #3d0e0e; font-size: 25px;">
+                    Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rs. 1,999.00<br><br>
+                </div> 
+                <div class="pl-5 confirmation">
+                    <button type="button" class="btn btn-info" onclick="alert_fun()">Confirm Shipping</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/bootstrap.min.js"></script>
+    <script>
+        function alert_fun(){
+            alert("Hi, Your Payment Confirmed.Thank you");
+        }
+    </script>
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

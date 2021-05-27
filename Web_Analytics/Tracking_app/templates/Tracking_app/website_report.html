@@ -1,0 +1,229 @@
+{% extends 'Tracking_app/base.html' %}
+{% load static %}
+{% block main-content %}
+    
+    <div class="container-fluid pt-3">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Analytics of The Stiches</h1>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-8">
+                        <form id=send_date method="get" action="{% url 'Tracking_app:report' %}">
+                            <div class="col-auto ms-md-auto">
+                                <div class="bg-success text-white" id="reportrange" style="cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                                    <i class="fas fa-calendar-week text-white"></i>&nbsp;
+                                    <input type="hidden" id="dates" name="dates" value="">
+                                    <span></span> 
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-success text-white">submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        
+        <!-- <div class="shadow-lg p-3 mb-5 bg-body rounded"> -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card shadow p-3 bg-body rounded-top" style="max-width: 15rem;">
+                            <div class="card-body text-center">
+                                <canvas id="total_doughnut" width="170" height="130"></canvas>
+                                <h1 class="card-title">
+                                    {% if data %}
+                                        {{data.total_visitors}}
+                                    {% endif %}
+                                </h1>
+                                <div class="text-muted">Total Visitors</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="card shadow p-3 bg-body rounded-top" style="max-width: 15rem;">
+                            <div class="card-body text-center">
+                                <canvas id="unique_doughnut" width="170" height="130"></canvas>
+                                <h1 class="card-title">
+                                    {% if data %}
+                                        {{data.unique_visitors}}
+                                    {% endif %}
+                                </h1>
+                                <div class="text-muted">Unique Visitors</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-4 border-end border-info">
+                        <div class="card shadow p-3 bg-body rounded-top" style="max-width: 15rem;">
+                            <div class="card-body text-center">
+                                <canvas id="visits_doughnut" width="170" height="130"></canvas>
+                                <h1 class="card-title">
+                                    {% if data %}
+                                        {{data.visits}}
+                                    {% endif %}
+                                </h1>
+                                <div class="text-muted">Visits</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col pt-5 text-center">
+                        <div class="desktop">
+                            <i class="fas fa-desktop fa-7x text-muted"></i><br>
+                            <h3 class='pt-3'>
+                                {% if data.device.laptop %}
+                                    {{data.device.laptop}}
+                                {% else %}
+                                    {{'None'}}
+                                {% endif %}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col pt-5 text-center">
+                        <div class="mobile">
+                            <i class="fas fa-mobile-alt fa-7x text-muted"></i>
+                            <h3 class='pt-3'>
+                                {% if data.device.deskop %}
+                                    {{data.device.deskop}}
+                                {% else %}
+                                    {{'None'}}
+                                {% endif %}
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">   
+            <div class="col-md-6 border-end border-info">
+                <div class="card shadow p-3 bg-body rounded-top">
+                    <div class="card-body">
+                        <canvas id="user_line_chart" width="550" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card text-center shadow p-3 bg-body rounded-top">
+                    <div class="card-body">
+                        <canvas id="loc_bar" width="550" height="295"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4 border-end border-info">
+                 <canvas id="time_diff_chart" width="300" height="200"></canvas>
+            </div>
+            <div class="col-md-4 border-end border-info">
+                <canvas id="os_pie" width="440" height="300"></canvas>
+            </div>
+            <div class="col-md-4 border-end border-info">
+                <canvas id="device_pie" width="440" height="300"></canvas>
+            </div>
+        </div>
+        <hr>
+    </div>
+{% endblock %}
+{% block scriptblock %}
+    <script>
+        // for storing date
+        alertme = function(){
+            $(document).ready(function(){
+                var date = $('#reportrange span').text();
+                // console.log(date);
+            });
+        }
+
+        // calender
+        $(function() {
+            var start = moment();
+            // var start;
+            var end = moment();
+            // var end;
+            console.log(start);
+            console.log(end);
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                var date = $('#reportrange span').text();
+                $('input[name=dates]').val(date);
+                // console.log($('#dates').val());
+                // console.log(date);
+                // alertme();
+            }
+            $('#reportrange').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                'Today': [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                'This Month': [moment().startOf('month'), moment().endOf('month')],
+                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+            cb(start, end);
+            var startDate = $('#reportrange').data('daterangepicker').startDate._d;
+            var endDate = $('#reportrange').data('daterangepicker').endDate._d;
+        });
+    
+        // total visitors doughnut
+        var total_visitors = "{{data.total_visitors}}";
+        // unique visitors
+        var unique_visitors = "{{data.unique_visitors}}";
+        // visits
+        var visits = "{{data.visits}}";
+        // pie chart
+        var page_name = "{{data.page}}";
+        // converting to javascript object
+        var json_page_name = JSON.parse(page_name.replace(/(&#x27;)/g,"\""));
+
+        // stacked bar chart
+        var city = "{{data.city}}";
+        // converting to javascript object
+        var json_city = JSON.parse(city.replace(/(&#x27;)/g,"\""));
+        var region = "{{data.region}}";
+        // converting to javascript object
+        var json_region = JSON.parse(region.replace(/(&#x27;)/g,"\""));
+        var country = "{{data.country}}";
+        // converting to javascript object
+        var json_country = JSON.parse(country.replace(/(&#x27;)/g,"\""));
+
+        // time line chart
+        var min_time = "{{data.min_time}}";
+        var max_time = "{{data.max_time}}";
+        var time_data = "{{data.time_data}}";
+        var json_time_data = JSON.parse(time_data.replace(/(&#x27;)/g,"\""));
+
+        // os chart
+        var os = "{{data.os}}";
+        var json_os = JSON.parse(os.replace(/(&#x27;)/g,"\""));
+
+        // device chart
+        var device = "{{data.device}}";
+        var json_device = JSON.parse(device.replace(/(&#x27;)/g,"\""));
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+    <script src="{% static 'js/custom_js/total_visitors_chart.js' %}"></script>
+    <script src="{% static 'js/custom_js/unique_visitors_chart.js' %}"></script>
+    <script src="{% static 'js/custom_js/visits_chart.js' %}"></script>
+    <script src="{% static 'js/custom_js/user_line.js' %}"></script>
+    <script src="{% static 'js/custom_js/stacked.js' %}"></script>
+    <script src="{% static 'js/custom_js/line_time_chart.js' %}"></script>
+    <script src="{% static 'js/custom_js/os_pie_chart.js' %}"></script>
+    <script src="{% static 'js/custom_js/device_pie_chart.js' %}"></script>
+{% endblock %}

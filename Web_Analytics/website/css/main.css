@@ -1,0 +1,32 @@
+body{
+    margin: 0;
+}
+.bar{
+    background-color: #3d0e0e; 
+    padding: 13px; 
+}
+.image{
+    padding-left: 50px;
+}
+.nav-custom{
+    background-color: white;
+}
+/* p1.html styles */
+.prodDesc{
+    font-family: 'Cormorant Unicase', serif; 
+    font-size: 25px; 
+    color: #3d0e0e;
+}
+/* h1, h2, h3, h4, h5, h6{
+    color: #3d0e0e;
+     font-family: 'Cormorant Unicase', serif; 
+} */
+.pricing{
+    font-family: 'Cormorant Unicase', serif; 
+    font-size: 25px; 
+    color: #3d0e0e;
+}
+.care{
+    color: #3d0e0e; 
+    font-family: 'Della Respira', serif;
+}
